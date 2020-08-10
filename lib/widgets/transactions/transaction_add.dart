@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TransactionAdd extends StatelessWidget {
   String inputName;
   double inputAmount;
-  DateTime inputDate;
+  //DateTime inputDate;
 
   final Function newTxHandler;
   TransactionAdd(this.newTxHandler);
@@ -17,23 +17,22 @@ class TransactionAdd extends StatelessWidget {
           TextFormField(
             onFieldSubmitted: (value) {
               inputName = value;
+              print(inputName);
             },
           ),
           TextFormField(
             onFieldSubmitted: (value) {
-              inputAmount= double.parse(value);
+              inputAmount = double.parse(value);
+              print(inputAmount);
             },
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: RaisedButton(
-              onPressed: () {
-                inputName.isNotEmpty ? 
-                newTxHandler(inputName, inputAmount) : 
-                print('add some input values');
-              },
-              child: Text('Submit'),
-            ),
+          FlatButton(
+            child: Text('Submit'),
+            onPressed: () {
+              //newTxHandler(inputName, inputAmount);
+              print(inputName);
+              print(inputAmount);
+            },
           ),
         ],
       )

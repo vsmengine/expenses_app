@@ -25,12 +25,27 @@ class _TransactionsState extends State<Transactions> {
     });
   }
 
+  void _openNewTransaction(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (bctx) {
+        return TransactionAdd(_addNewTransaction);
+      },
+    );
+  }
+
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         TransactionsRecent(),
         TransactionsList(_transactions),
-        TransactionAdd(_addNewTransaction),
+        //TransactionAdd(_addNewTransaction),
+        RaisedButton(
+          child: Icon(Icons.add),
+          onPressed: () => {
+            _openNewTransaction(context)
+          }
+        )
       ],     
     );
   }
