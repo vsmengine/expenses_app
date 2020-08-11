@@ -1,38 +1,46 @@
 import 'package:flutter/material.dart';
 
-class TransactionAdd extends StatelessWidget {
-  String inputName;
-  double inputAmount;
+class TransactionAdd extends StatefulWidget {
+  // String inputName;
+  // double inputAmount;
   //DateTime inputDate;
-
   final Function newTxHandler;
   TransactionAdd(this.newTxHandler);
 
   @override
+  _TransactionAddState createState() => _TransactionAddState();
+}
+
+class _TransactionAddState extends State<TransactionAdd> {
+  final nameController = TextEditingController();
+  final amountController = TextEditingController();
+
+  void submitData() {
+    final name = nameController.text;
+    final amount = double.parse(amountController.text);
+    widget.newTxHandler(name, amount);
+    print(name);
+    print(amount);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Form(
+    return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          TextFormField(
-            onFieldSubmitted: (value) {
-              inputName = value;
-              print(inputName);
-            },
+          TextField(
+            decoration: InputDecoration(labelText: 'Name'),
+            controller: nameController,
           ),
-          TextFormField(
-            onFieldSubmitted: (value) {
-              inputAmount = double.parse(value);
-              print(inputAmount);
-            },
+          TextField(
+            decoration: InputDecoration(labelText: 'Amount'),
+            controller: amountController,
+            // },
           ),
           FlatButton(
             child: Text('Submit'),
-            onPressed: () {
-              //newTxHandler(inputName, inputAmount);
-              print(inputName);
-              print(inputAmount);
-            },
+            onPressed: submitData,
           ),
         ],
       )

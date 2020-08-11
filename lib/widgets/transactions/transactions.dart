@@ -7,7 +7,7 @@ import '../../models/transaction.dart';
 
 
 class Transactions extends StatefulWidget {
-    @override
+  @override
   _TransactionsState createState() => _TransactionsState();
 }
 
@@ -28,12 +28,17 @@ class _TransactionsState extends State<Transactions> {
   void _openNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
-      builder: (bctx) {
-        return TransactionAdd(_addNewTransaction);
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: TransactionAdd(_addNewTransaction),
+          behavior: HitTestBehavior.opaque,
+        );
       },
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
@@ -42,9 +47,7 @@ class _TransactionsState extends State<Transactions> {
         //TransactionAdd(_addNewTransaction),
         RaisedButton(
           child: Icon(Icons.add),
-          onPressed: () => {
-            _openNewTransaction(context)
-          }
+          onPressed: () => _openNewTransaction(context)
         )
       ],     
     );
