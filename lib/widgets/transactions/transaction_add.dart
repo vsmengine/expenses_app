@@ -16,16 +16,20 @@ class _TransactionAddState extends State<TransactionAdd> {
   final amountController = TextEditingController();
 
   void submitData() {
-    final name = nameController.text;
-    final amount = double.parse(amountController.text);
-    widget.newTxHandler(name, amount);
-    print(name);
-    print(amount);
+    final txname = nameController.text;
+    final txamount = double.parse(amountController.text);
+    if(txname.isEmpty || txamount <= 0) {
+      return;
+    } else { 
+      widget.newTxHandler(txname, txamount);
+    }
+    Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal:15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -36,6 +40,7 @@ class _TransactionAddState extends State<TransactionAdd> {
           TextField(
             decoration: InputDecoration(labelText: 'Amount'),
             controller: amountController,
+            keyboardType: TextInputType.number,
             // },
           ),
           FlatButton(

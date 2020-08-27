@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import './transactions_list.dart';
 import './transactions_recent.dart';
@@ -14,15 +15,24 @@ class Transactions extends StatefulWidget {
 class _TransactionsState extends State<Transactions> {
 
   final List<Transaction> _transactions = [
-    Transaction(id: '001', title: 'vegetables', amount: 12.51, date: DateTime.now(),),
-    Transaction(id: '002', title: 'fruits', amount: 5.29, date: DateTime.now(),),
+    Transaction(id: '001', title: 'Vegetables', amount: 12.51, date: DateTime.now(),),
+    Transaction(id: '002', title: 'Fruits', amount: 5.29, date: DateTime.now(),),
+    Transaction(id: '003', title: 'Clothes', amount: 8.81, date: DateTime.now(),),
   ];
 
   void _addNewTransaction(txTitle, txAmount) {
-    var newTx = Transaction(id: '001', title: txTitle, amount: txAmount, date: DateTime.now());
+    var newTx = Transaction(id: '000', title: txTitle, amount: txAmount, date: DateTime.now());
     setState(() {
       _transactions.add(newTx);
     });
+  }
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((element) {
+      DateTime today = new DateTime.now();
+      DateTime sevenDaysAgo = today.subtract(new Duration(days: 7));
+      return element.date.isAfter(sevenDaysAgo);
+    }).toList();
   }
 
   void _openNewTransaction(BuildContext ctx) {
@@ -42,13 +52,14 @@ class _TransactionsState extends State<Transactions> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        TransactionsRecent(),
+        TransactionsRecent(_recentTransactions),
         TransactionsList(_transactions),
-        //TransactionAdd(_addNewTransaction),
-        RaisedButton(
+        FloatingActionButton(
           child: Icon(Icons.add),
+          backgroundColor: Theme.of(context).primaryColor,
+          foregroundColor: Colors.white,
           onPressed: () => _openNewTransaction(context)
-        )
+        ),
       ],     
     );
   }

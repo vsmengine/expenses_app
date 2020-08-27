@@ -13,9 +13,24 @@ class MyApp extends StatelessWidget {
       title: 'Expenses App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        accentColor: Colors.amber,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        textTheme: TextTheme(
+          headline3: TextStyle(
+            fontFamily: 'Roboto',
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
+          ),
+          bodyText1: TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            color: Colors.black87,
+          ),
+        ),
       ),
-      home: MyHomePage(title: 'Expenses App'),
+      home: MyHomePage(title: 'ExpensesApp'),
     );
   }
 }
@@ -30,17 +45,25 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text(widget.title),
+    );
+    
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
+      appBar: appBar,
+      body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Transactions(),
           ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        child: Container(
+          height: 50.0,
         ),
       ),
     );
