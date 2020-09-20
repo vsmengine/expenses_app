@@ -16,6 +16,13 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.amber,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: TextTheme(
+          headline2: TextStyle(
+            fontFamily: 'Roboto',
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+            
+          ),
           headline3: TextStyle(
             fontFamily: 'Roboto',
             fontSize: 16,
@@ -30,7 +37,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: MyHomePage(title: 'ExpensesApp'),
+      home: MyHomePage(title: 'Expense App'),
     );
   }
 }
@@ -43,11 +50,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
       title: Text(widget.title),
     );
+    final availableScreenHeight = MediaQuery.of(context).size.height
+     - MediaQuery.of(context).padding.top
+     - appBar.preferredSize.height;
     
     return Scaffold(
       appBar: appBar,
@@ -56,16 +67,18 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Transactions(),
+            Transactions(availableScreenHeight),
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        child: Container(
-          height: 50.0,
-        ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        backgroundColor: Theme.of(context).primaryColor,
+        foregroundColor: Colors.white,
+        onPressed: () => Transactions(availableScreenHeight).floatingAction(context),
       ),
     );
   }
+
 }

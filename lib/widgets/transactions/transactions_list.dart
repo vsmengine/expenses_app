@@ -10,13 +10,14 @@ class TransactionsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
       padding: EdgeInsets.symmetric(vertical: 10, horizontal:10),
       decoration: BoxDecoration(
-        //color: Colors.amber[100],
+        
       ),
       child: _transactionList.length > 0 ? ListView.builder(
-        itemBuilder: (ctx, index) { return TransactionCard(_transactionList[index]);},
+        itemBuilder: (ctx, index) { 
+          return TransactionCard(_transactionList[index]);
+        },
         itemCount: _transactionList.length,
       ) : Container(
         child: Column(
@@ -27,8 +28,6 @@ class TransactionsList extends StatelessWidget {
         ),
       ),
     );
-
-
 
     //Column(
     //   children: _transactionList.map((transaction) {

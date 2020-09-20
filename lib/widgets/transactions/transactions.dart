@@ -6,8 +6,12 @@ import './transactions_recent.dart';
 import './transaction_add.dart';
 import '../../models/transaction.dart';
 
-
 class Transactions extends StatefulWidget {
+  final double availableScreenHeight;
+  Transactions(this.availableScreenHeight);
+
+  floatingAction(ctx) => createState()._openNewTransaction(ctx);
+
   @override
   _TransactionsState createState() => _TransactionsState();
 }
@@ -35,7 +39,7 @@ class _TransactionsState extends State<Transactions> {
     }).toList();
   }
 
-  void _openNewTransaction(BuildContext ctx) {
+  _openNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
@@ -50,17 +54,19 @@ class _TransactionsState extends State<Transactions> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        TransactionsRecent(_recentTransactions),
-        TransactionsList(_transactions),
-        FloatingActionButton(
-          child: Icon(Icons.add),
-          backgroundColor: Theme.of(context).primaryColor,
-          foregroundColor: Colors.white,
-          onPressed: () => _openNewTransaction(context)
-        ),
-      ],     
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Container(
+            height: widget.availableScreenHeight * 0.4,
+            child: TransactionsRecent(_recentTransactions)
+          ),
+          Container(
+            height: widget.availableScreenHeight * 0.6,
+            child: TransactionsList(_transactions)
+          ),
+        ],     
+      ),
     );
   }
 }

@@ -20,50 +20,68 @@ class TransactionsRecent extends StatelessWidget {
   }
 
   double get _totalRecentTxSum {
-    double weekTxSum = 0.0;
-    _recentTxSum.forEach((sum) {
-      weekTxSum += sum['total'];
-    });
+    double weekTxSum = _recentTxSum.fold(0, (prev, element) => prev + element['total']);
     return weekTxSum;
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal:10),
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColorLight,
+        color: Colors.yellow
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          ...(_recentTxSum).map((recentSum) {
-            return Column(
-              children: <Widget>[
-                Container(
-                  height: 100,
-                  width: 15,
-                  decoration: BoxDecoration(
-                    color: Colors.black38
-                  ),
-                  child: FractionallySizedBox(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black
-                      ),
-                    ),
-                    heightFactor: double.parse(recentSum['total'].toString())/_totalRecentTxSum,
-                    alignment: Alignment.bottomCenter,
-                  ),
-                  // child: Text(recentSum['total'].toString()),
-                ),
-                Text('date'),
-                Text(recentSum['total'].toString()),  
-                Text(_totalRecentTxSum.toString()),              
-              ],
-            );
-          }).toList(),
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+            child: Text(
+              'Recent Statistics',
+              style: Theme.of(context).textTheme.headline3
+            )
+          ),
+          Card(
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal:10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  ...(_recentTxSum).map((recentSum) {
+                    return Column(
+                      children: <Widget>[
+                        Container(
+                          height: 100,
+                          width: 15,
+                          decoration: BoxDecoration(
+                            color: Colors.black38
+                          ),
+                          child: Stack(
+                            children: <Widget>[
+                              FractionallySizedBox(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.black
+                                  ),
+                                ),
+                                heightFactor: double.parse(recentSum['total'].toString())/_totalRecentTxSum,
+                                alignment: Alignment.bottomCenter,
+                              ),
+                            ],
+                          )
+                        ),
+                        Text(recentSum['day'].toString()),
+                        Text(recentSum['total'].toString()),  
+                        Text(_totalRecentTxSum.toString()),              
+                      ],
+                    );
+                  }).toList(),
+                ],
+              ),
+            )
+          )
         ],
-      ),
+      )
     );
   }
 }
